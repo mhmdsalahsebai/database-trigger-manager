@@ -4,6 +4,8 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
+require_once plugin_dir_path(__FILE__) . '../constants/index.php';
+
 /**
  * Class DTM_DatabaseTriggerManager
  *
@@ -141,7 +143,7 @@ class DTM_DatabaseTriggerManager
 
         if (!empty($triggers)) {
             foreach ($triggers as $trigger) {
-                $this->drop_trigger($trigger->trigger_name);
+                $this->drop_trigger($trigger->TRIGGER_NAME);
             }
         }
     }
