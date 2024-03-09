@@ -4,4 +4,5 @@
 # Ignore dependency management files
 /node_modules/
 /vendor/
+/build/
 
