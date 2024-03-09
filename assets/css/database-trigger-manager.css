@@ -1,0 +1,97 @@
+
+
+.trigger-form {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+
+}
+
+.trigger-form .form-group {
+    margin-bottom: 20px;
+}
+
+.trigger-form label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+}
+
+.trigger-form select,
+.trigger-form input[type="text"],
+.trigger-form textarea {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.trigger-form textarea {
+    resize: vertical;
+}
+
+.trigger-form .button-primary {
+    padding: 10px 20px;
+    background-color: #0073aa;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.trigger-form .button-primary:hover {
+    background-color: #005d80;
+}
+
+.CodeMirror {
+    border: 1px solid #ddd;
+    max-width: 400px;
+    max-height: 200px;
+}
+
+.trigger-search {
+    margin-bottom: 10px;
+}
+
+.dtm .pagination {
+    margin-top: 20px;
+}
+
+.dtm .pagination .page-numbers {
+    display: inline-block;
+    padding: 5px 10px;
+    margin-right: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+    text-decoration: none;
+}
+
+.dtm .pagination .page-numbers:hover {
+    background-color: #f4f4f4;
+}
+
+.dtm .pagination .current {
+    background-color: #0073aa;
+    color: #fff;
+}
+
+.dtm .pagination .prev,
+.dtm .pagination .next {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+    text-decoration: none;
+}
+
+.dtm .pagination .prev:hover,
+.dtm .pagination .next:hover {
+    background-color: #f4f4f4;
+}
