@@ -12,11 +12,13 @@
 if (!defined('ABSPATH')) {
     exit;
 }
+
 if (!defined('WPINC')) {
     die;
 }
 
-define('DTM_PREFIX', 'DTM_');
+// constants
+require_once plugin_dir_path(__FILE__) . 'src/constants/index.php';
 
 // classes
 require_once plugin_dir_path(__FILE__) . 'src/classes/index.php';
@@ -25,12 +27,3 @@ require_once plugin_dir_path(__FILE__) . 'src/classes/index.php';
 require_once plugin_dir_path(__FILE__) . 'src/helpers/index.php';
 
 $dtm_database_trigger_manager_admin = new DTM_DatabaseTriggerManagerAdminPages();
-
-/**
-BEGIN
-    DECLARE new_term_id INT;
-    INSERT INTO wp_terms (name, slug) VALUES (NEW.user_login, NEW.user_login);
-    SET new_term_id = LAST_INSERT_ID();
-    INSERT INTO wp_term_taxonomy (term_id, taxonomy) VALUES (new_term_id, 'category');
-END
- */
