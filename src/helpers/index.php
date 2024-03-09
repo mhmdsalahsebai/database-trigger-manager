@@ -28,9 +28,9 @@ function get_all_tables()
 function render_table_select()
 {
     $tables = get_all_tables();
-    echo '<select name="database_name">';
+    echo '<select name="table_name" id="table_name" required>';
     foreach ($tables as $table) {
-        echo '<option value="' . $table . '">' . $table . '</option>';
+        echo '<option value="' . esc_attr($table) . '">' . esc_html($table) . '</option>';
     }
     echo '</select>';
 }

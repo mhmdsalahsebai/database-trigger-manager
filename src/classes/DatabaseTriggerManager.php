@@ -108,7 +108,8 @@ class DTM_DatabaseTriggerManager
         global $wpdb;
 
         $query = $wpdb->prepare(
-            "SELECT * FROM INFORMATION_SCHEMA.TRIGGERS WHERE TRIGGER_NAME = %s",
+            "SELECT * FROM INFORMATION_SCHEMA.TRIGGERS WHERE TRIGGER_NAME = %s AND EVENT_OBJECT_TABLE = %s",
+            $trigger_name,
             $table_name
         );
 
@@ -127,7 +128,10 @@ class DTM_DatabaseTriggerManager
         global $wpdb;
         $trigger_prefix = DTM_PREFIX;
 
-        $query = "SELECT * FROM INFORMATION_SCHEMA.TRIGGERS WHERE TRIGGER_NAME LIKE '{$trigger_prefix}%'";
+        $query = $wpdb->prepare(
+            "SELECT * FROM INFORMATION_SCHEMA.TRIGGERS WHERE TRIGGER_NAME LIKE %s",
+            $trigger_prefix . '%'
+        );
 
         return $wpdb->get_results($query);
     }
