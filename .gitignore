@@ -1,0 +1,7 @@
+# Ignore cache and temporary files
+/.vscode/
+
+# Ignore dependency management files
+/node_modules/
+/vendor/
+
