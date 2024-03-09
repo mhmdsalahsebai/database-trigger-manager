@@ -82,7 +82,6 @@ function sanitize_trigger_name($string)
         $sanitized = '_' . $sanitized;
     }
 
-    // Return the sanitized string
     return $sanitized;
 }
 

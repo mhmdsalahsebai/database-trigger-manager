@@ -42,12 +42,16 @@ class DTM_DatabaseTriggerManagerAdminPages
      */
     public function add_admin_menu()
     {
+        $icon_url = plugins_url('../../assets/images/dtm-logo.png', __FILE__);
+
         add_menu_page(
             __('Database Triggers', 'database-trigger-manager'),
             __('Database Triggers', 'database-trigger-manager'),
             'manage_options',
             'database-triggers',
-            array($this, 'display_trigger_list_page')
+            array($this, 'display_trigger_list_page'),
+            $icon_url,
+            100
         );
 
         add_submenu_page(
@@ -319,7 +323,6 @@ class DTM_DatabaseTriggerManagerAdminPages
             wp_die('Unauthorized access!');
         }
 
-
         // Process form data
         if (isset($_POST['submit'])) {
 
@@ -351,7 +354,6 @@ class DTM_DatabaseTriggerManagerAdminPages
                 wp_redirect(admin_url('admin.php?page=database-triggers&message=trigger_added'));
                 exit;
             } else {
-                // Deletion failed
                 wp_die("Failed to add trigger");
             }
         }
@@ -387,7 +389,6 @@ class DTM_DatabaseTriggerManagerAdminPages
             wp_redirect(admin_url('admin.php?page=database-triggers&message=trigger_deleted'));
             exit;
         } else {
-            // Deletion failed
             wp_die("Failed to delete trigger.");
         }
 
