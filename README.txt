@@ -53,3 +53,9 @@ For support or to report issues, please visit the [GitHub repository](https://gi
 ## Contributing
 
 Contributions are welcome!
+
+## License
+
+Database Trigger Manager is licensed under the GPL-2.0-or-later License.
+
+**License URI:** https://www.gnu.org/licenses/gpl-2.0.html
