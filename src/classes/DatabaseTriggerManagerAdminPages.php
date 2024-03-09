@@ -42,15 +42,13 @@ class DTM_DatabaseTriggerManagerAdminPages
      */
     public function add_admin_menu()
     {
-        $icon_url = plugins_url('../../assets/images/dtm-logo.png', __FILE__);
-
         add_menu_page(
             __('Database Triggers', 'database-trigger-manager'),
             __('Database Triggers', 'database-trigger-manager'),
             'manage_options',
             'database-triggers',
             array($this, 'display_trigger_list_page'),
-            $icon_url,
+            'dashicons-database',
             100
         );
 
