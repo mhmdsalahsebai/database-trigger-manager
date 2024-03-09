@@ -72,6 +72,7 @@ class DTM_DatabaseTriggerManagerAdminPages
             wp_die('Unauthorized access!');
         }
 
+        $database_trigger_manager = new DTM_DatabaseTriggerManager();
         // Pagination parameters
         global $wpdb;
         $trigger_prefix = DTM_PREFIX;
@@ -79,18 +80,10 @@ class DTM_DatabaseTriggerManagerAdminPages
         $currentPage = isset($_GET['paged']) ? max(1, intval($_GET['paged'])) : 1;
         $offset = ($currentPage - 1) * $triggersPerPage;
 
-        // Query to retrieve total number of triggers
-        $totalTriggersQuery = "SELECT COUNT(*) AS total_triggers FROM INFORMATION_SCHEMA.TRIGGERS WHERE TRIGGER_NAME LIKE '{$trigger_prefix}%'";
-        $totalTriggers = $wpdb->get_var($totalTriggersQuery);
-
-        // Calculate total number of pages
+        $totalTriggers = $database_trigger_manager->get_total_triggers();
         $totalPages = ceil($totalTriggers / $triggersPerPage);
 
-        // Query to retrieve triggers for the current page
-        $query = "SELECT * FROM INFORMATION_SCHEMA.TRIGGERS WHERE TRIGGER_NAME LIKE '{$trigger_prefix}%' LIMIT $offset, $triggersPerPage";
-
-        // Execute the query
-        $triggers = $wpdb->get_results($query);
+        $triggers = $database_trigger_manager->get_triggers_with_limit($offset, $triggersPerPage);
 
         ?>
 <div class="wrap dtm">

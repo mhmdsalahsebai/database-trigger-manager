@@ -107,16 +107,26 @@ class DTM_DatabaseTriggerManager
     {
         global $wpdb;
 
-        $query = $wpdb->prepare(
-            "SELECT * FROM INFORMATION_SCHEMA.TRIGGERS WHERE TRIGGER_NAME = %s AND EVENT_OBJECT_TABLE = %s",
-            $trigger_name,
-            $table_name
-        );
+        $cache_key = DTM_PREFIX . 'trigger_' . md5($trigger_name . '_' . $table_name);
 
-        $trigger = $wpdb->get_row($query);
+        $trigger = wp_cache_get($cache_key, 'triggers');
+
+        if ($trigger === false) {
+            $query = $wpdb->prepare(
+                "SELECT * FROM INFORMATION_SCHEMA.TRIGGERS WHERE TRIGGER_NAME = %s AND EVENT_OBJECT_TABLE = %s",
+                $trigger_name,
+                $table_name
+            );
+
+            $trigger = $wpdb->get_row($query);
+
+            // Cache the trigger for future use
+            wp_cache_set($cache_key, $trigger, 'triggers');
+        }
 
         return $trigger;
     }
+
 
     /**
      * Get all triggers registered by the plugin.
@@ -128,13 +138,24 @@ class DTM_DatabaseTriggerManager
         global $wpdb;
         $trigger_prefix = DTM_PREFIX;
 
-        $query = $wpdb->prepare(
-            "SELECT * FROM INFORMATION_SCHEMA.TRIGGERS WHERE TRIGGER_NAME LIKE %s",
-            $trigger_prefix . '%'
-        );
+        $cache_key = DTM_PREFIX . 'registered_triggers';
 
-        return $wpdb->get_results($query);
+        $registered_triggers = wp_cache_get($cache_key, 'triggers');
+
+        if ($registered_triggers === false) {
+            $query = $wpdb->prepare(
+                "SELECT * FROM INFORMATION_SCHEMA.TRIGGERS WHERE TRIGGER_NAME LIKE %s",
+                $trigger_prefix . '%'
+            );
+
+            $registered_triggers = $wpdb->get_results($query);
+
+            wp_cache_set($cache_key, $registered_triggers, 'triggers');
+        }
+
+        return $registered_triggers;
     }
+
 
     /**
      * Drop all triggers registered by the plugin.
@@ -151,4 +172,62 @@ class DTM_DatabaseTriggerManager
             }
         }
     }
+
+    /**
+     * Retrieves the total number of triggers.
+     *
+     * This method executes a query to count the total number of triggers in the database
+     * with names starting with the specified trigger prefix and caches the result.
+     *
+     * @return int Total number of triggers.
+     */
+    public function get_total_triggers()
+    {
+        global $wpdb;
+        $trigger_prefix = DTM_PREFIX;
+
+        $cache_key = DTM_PREFIX . 'total_triggers';
+
+        $total_triggers = wp_cache_get($cache_key, 'triggers');
+
+        if ($total_triggers === false) {
+            $totalTriggersQuery = "SELECT COUNT(*) AS total_triggers FROM INFORMATION_SCHEMA.TRIGGERS WHERE TRIGGER_NAME LIKE '{$trigger_prefix}%'";
+            $total_triggers = $wpdb->get_var($totalTriggersQuery);
+
+            wp_cache_set($cache_key, $total_triggers, 'triggers');
+        }
+
+        return $total_triggers;
+    }
+
+    /**
+     * Retrieves triggers with a limit.
+     *
+     * This method executes a query to retrieve triggers from the database with names starting
+     * with the specified trigger prefix and applies a limit and offset. It caches the result.
+     *
+     * @param int $offset Offset for pagination.
+     * @param int $triggersPerPage Number of triggers per page.
+     * @return array Array of triggers.
+     */
+    public function get_triggers_with_limit($offset, $triggersPerPage)
+    {
+        global $wpdb;
+        $trigger_prefix = DTM_PREFIX;
+
+        $cache_key = DTM_PREFIX . 'triggers_with_limit_' . $offset . '_' . $triggersPerPage;
+
+        $triggers = wp_cache_get($cache_key, 'triggers');
+
+        if ($triggers === false) {
+            $query = "SELECT * FROM INFORMATION_SCHEMA.TRIGGERS WHERE TRIGGER_NAME LIKE '{$trigger_prefix}%' LIMIT $offset, $triggersPerPage";
+            $triggers = $wpdb->get_results($query);
+
+            wp_cache_set($cache_key, $triggers, 'triggers');
+        }
+
+        return $triggers;
+    }
+
+
 }

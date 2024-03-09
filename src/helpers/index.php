@@ -5,20 +5,35 @@ if (!defined('ABSPATH')) {
 }
 
 /**
- * Retrieve a list of all database tables.
+ * Retrieves all tables from the database.
  *
- * @global wpdb $wpdb WordPress database abstraction object.
- * @return array Array of database table names.
+ * This function retrieves all tables from the WordPress database using $wpdb->get_results()
+ * and caches the result for improved performance.
+ *
+ * @return array Array of table names.
  */
-
 function get_all_tables()
 {
     global $wpdb;
-    $tables = $wpdb->get_results("SHOW TABLES");
-    $table_names = array();
-    foreach ($tables as $table) {
-        $table_names[] = $table->{'Tables_in_' . DB_NAME};
+
+    // Generate a unique cache key
+    $cache_key = DTM_PREFIX . 'all_tables';
+
+    // Attempt to retrieve table names from the cache
+    $table_names = wp_cache_get($cache_key, 'tables');
+
+    // If table names are not found in the cache, fetch them from the database
+    if ($table_names === false) {
+        $tables = $wpdb->get_results("SHOW TABLES");
+        $table_names = array();
+        foreach ($tables as $table) {
+            $table_names[] = $table->{'Tables_in_' . DB_NAME};
+        }
+
+        // Cache the table names for future use
+        wp_cache_set($cache_key, $table_names, 'tables');
     }
+
     return $table_names;
 }
 
