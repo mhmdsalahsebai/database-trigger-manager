@@ -273,6 +273,7 @@ class DTM_DatabaseTriggerManagerAdminPages
             <label
                 for="trigger_sql"><?php esc_html_e('SQL Command:', 'database-trigger-manager'); ?></label>
             <textarea id="trigger-sql" class="trigger-action-statement" rows="5" disabled></textarea>
+            <small class="form-text text-muted highlight">Please use curly braces '{}' to indicate table names. For example, '{users}' will be prefixed as 'wp_users'.</small>
         </div>
 
         <!-- Hidden input field to store the SQL command -->

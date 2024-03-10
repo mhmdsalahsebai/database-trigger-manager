@@ -95,3 +95,13 @@
 .dtm .pagination .next:hover {
     background-color: #f4f4f4;
 }
+
+
+.highlight {
+    display: inline-block;
+    padding: 5px;
+    border-radius: 5px;
+    margin-top: 0.25rem;
+    font-weight: bold;
+    background-color: rgba(255, 224, 47, 0.5);
+}

@@ -25,26 +25,29 @@ document.addEventListener("DOMContentLoaded", function() {
     const searchInput = document.getElementById('trigger-search');
     const table = document.getElementById('trigger-table');
 
-    // Attach event listener to search input field
-    searchInput.addEventListener('input', function() {
-        // Get search query
-        const query = this.value.trim().toLowerCase();
+    if(searchInput) {
+        // Attach event listener to search input field
+        searchInput.addEventListener('input', function() {
+            // Get search query
+            const query = this.value.trim().toLowerCase();
 
-        // Get table rows
-        const rows = table.querySelectorAll('tbody tr');
+            // Get table rows
+            const rows = table.querySelectorAll('tbody tr');
 
-        // Loop through table rows
-        for (let i = 0; i < rows.length; i++) {
-            // Get trigger name cell (adjust index as needed)
-            console.log("rows[i]", rows[i])
+            // Loop through table rows
+            for (let i = 0; i < rows.length; i++) {
+                // Get trigger name cell (adjust index as needed)
+                console.log("rows[i]", rows[i])
 
-            const triggerNameCell = rows[i].querySelector('.trigger-name-column'); // Assuming trigger name is in the 5th column
-            console.log("triggerNameCell", triggerNameCell)
-            // Get trigger name text content
-            const triggerName = triggerNameCell.textContent.trim().toLowerCase();
+                const triggerNameCell = rows[i].querySelector('.trigger-name-column'); // Assuming trigger name is in the 5th column
+                console.log("triggerNameCell", triggerNameCell)
+                // Get trigger name text content
+                const triggerName = triggerNameCell.textContent.trim().toLowerCase();
 
-            // Toggle row visibility based on search query match
-            rows[i].style.display = triggerName.includes(query) ? '' : 'none';
-        }
-    });
+                // Toggle row visibility based on search query match
+                rows[i].style.display = triggerName.includes(query) ? '' : 'none';
+            }
+        });
+    }
+
 });

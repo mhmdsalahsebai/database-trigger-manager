@@ -49,6 +49,7 @@ class DTM_DatabaseTriggerManager
             CREATE TRIGGER {$trigger['trigger_name']} {$trigger['timer']} {$trigger['event']} ON {$trigger['table_name']} ";
             $create_trigger_sql .= "FOR EACH ROW ";
             $create_trigger_sql .= wp_unslash($trigger['sql_command']);
+            $create_trigger_sql = prefixTableNames($create_trigger_sql);
 
             $result_create_trigger = $mysqli->query($create_trigger_sql);
             if (!$result_create_trigger) {

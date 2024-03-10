@@ -123,3 +123,26 @@ function sanitize_and_prefix_trigger_name($trigger_name, $table_name)
 
     return $prefixed_sanitized_trigger_name;
 }
+
+
+/**
+ * Prefix table names within curly braces with the WordPress table prefix.
+ *
+ * @param string $sqlCode The SQL code to process.
+ * @global object $wpdb The WordPress database access abstraction object.
+ * @return string The SQL code with prefixed table names.
+ */
+function prefixTableNames($sqlCode)
+{
+    global $wpdb;
+
+    // Define the pattern to match table names within curly braces
+    $pattern = '/\{([^\}]+)\}/';
+
+    // Replace table names within curly braces with the prefixed names
+    $prefixedSql = preg_replace_callback($pattern, function ($matches) use ($wpdb) {
+        return $wpdb->prefix . $matches[1];
+    }, $sqlCode);
+
+    return $prefixedSql;
+}
